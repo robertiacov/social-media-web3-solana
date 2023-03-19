@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react'
 import SignUp from '../components/SignUp'
 import Feed from '../components/Feed'
 
+import { useWallet } from '@solana/wallet-adapter-react'
+
 const style = {
   wrapper: `bg-[#18191a] min-h-screen duration-[0.5s]`,
   homeWrapper: `flex`,
@@ -12,11 +14,12 @@ const style = {
 
 
 export default function Home() {
-  const [registered, setRegistered] = useState(false)
+  const [registered, setRegistered] = useState(true)
   const [name, setName] = useState('')
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState('https://avatars.dicebear.com/api/adventurer/midnight.svg')
   const [users, setUsers] = useState('')
 
+  const wallet = useWallet()
 
   return (
     <div className={style.wrapper}>
@@ -24,11 +27,12 @@ export default function Home() {
 
       {registered ? (
         <div className={style.homeWrapper}>
-          THIS IS THE HOME FEED
           {/* siderbar */}
           <div className={style.main}>
             <Feed 
-
+              connected={wallet.connected}
+              name = {name}
+              url = {url}
             />
           </div>
           {/* RightSideBar */}

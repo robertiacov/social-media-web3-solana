@@ -5,6 +5,7 @@ const nextConfig = {
     domains: [
       'avatars.dicebear.com',
       'avatars.githubusercontent.com',
+      'api.dicebear.com',
       'upload.wikimedia.org',
       'www.dmarge.com',
       'cdn-icons.flaticon.com',

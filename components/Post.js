@@ -30,16 +30,15 @@ const Post = ({ post, viewDetail, createComment, name, url }) => {
       const [isCommentSectionOpened, setIsCommentSectionOpened] = useState(false)
       const [comments, setComments] = useState([])
 
-      const clockToDateString = timestamp => {
+      const clockToDateString = timestamp => 
         timeAgo.format(new Date(timestamp.toNumber() * 1000), 'twitter-now')
 
-        const postDetail = async () => {
-            const result = await viewDetail(post.index, post)
+      
+      const postDetail = async () => {
+        const result = await viewDetail(post.index, post)
 
-            setComments(await result)
+        setComments(await result)
         }
-      }
-
 
   return (
     <div className={style.wrapper}>

@@ -15,7 +15,7 @@ const style = {
 
 
 export default function Home() {
-  const [registered, setRegistered] = useState(true)
+  const [registered, setRegistered] = useState(false)
   const [name, setName] = useState('')
   const [url, setUrl] = useState('https://avatars.dicebear.com/api/adventurer/midnight.svg')
   const [users, setUsers] = useState('')

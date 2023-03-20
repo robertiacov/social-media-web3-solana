@@ -14,6 +14,11 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
         randomUrl: `h-full bg-[#2d2d2d] hover:bg-[#252626] text-white px-2 py-1 mx-1 hover:px-3 rounded-full cursor-pointer duration-[0.2s] ease-in-out`,
         submitButton: `bg-[#3a3b3d] text-white font-semibold px-4 py-2 hover:px-6 rounded-full cursor-pointer duration-[0.2s] ease-in-out`,
       }
+
+    const createUser = async event =>{
+        setRegistered(true)
+    }
+
   return (
     <div className={style.wrapper}>
         <div className={style.container}>
@@ -26,7 +31,7 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
         </div>
         <div className={style.title}>
             Please sign up to use SocialMedia</div>
-            <form className={style.form}>
+            <form onSubmit={createUser} className={style.form}>
                 <div className={style.fieldContainer}>
                     <div className={style.inputTitle}>Name</div>
                     <div className={style.inputContainer}>
@@ -42,7 +47,7 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
                     <div className={style.inputTitle}>Profile Image URL</div>
                     <div className={style.inputContainer}>
                         <input 
-                        value={name}
+                        value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         required
                         className={style.inputField}

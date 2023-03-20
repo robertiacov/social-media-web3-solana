@@ -3,6 +3,7 @@ import SignUp from '../components/SignUp'
 import Feed from '../components/Feed'
 
 import { useWallet } from '@solana/wallet-adapter-react'
+import Header from '../components/Header'
 
 const style = {
   wrapper: `bg-[#18191a] min-h-screen duration-[0.5s]`,
@@ -23,7 +24,7 @@ export default function Home() {
 
   return (
     <div className={style.wrapper}>
-      {/* header */}
+      <Header name={name} url={url}/>
 
       {registered ? (
         <div className={style.homeWrapper}>

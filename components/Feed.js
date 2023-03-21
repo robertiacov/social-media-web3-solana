@@ -37,7 +37,16 @@ const Feed = ({ connected, name, url }) => {
     return () => clearInterval(interval)
   }, [connected, getAllPosts])
 
-  
+  useEffect(() => {
+    toast('Post Refreashed!',{
+      icon: '🔁',
+      style:{
+        borderRadius: '10px',
+        background: '#252526',
+        color: '#fffcf9',
+      }
+    })
+  },[posts.length])
 
   const getAllPosts = async () => {
     try {

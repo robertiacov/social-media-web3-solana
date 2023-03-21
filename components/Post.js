@@ -30,6 +30,16 @@ const Post = ({ post, viewDetail, createCommentForPost, name, url }) => {
       const [isCommentSectionOpened, setIsCommentSectionOpened] = useState(false)
       const [comments, setComments] = useState([])
 
+      useEffect(() => {
+        postDetail()
+      }, [postDetail])
+
+      useEffect(() => {
+        if(comments.length > 0) [
+          setIsCommentSectionOpened(true)
+        ]
+      }, [comments])
+
       const clockToDateString = timestamp => 
         timeAgo.format(new Date(timestamp.toNumber() * 1000), 'twitter-now')
 

@@ -37,16 +37,7 @@ const Feed = ({ connected, name, url }) => {
     return () => clearInterval(interval)
   }, [connected, getAllPosts])
 
-  useEffect(() => {
-    toast('Posts Refreshed!', {
-      icon: '🔁',
-      style: {
-        borderRadius: '10px',
-        background: '#252526',
-        color: '#fffcf9',
-      },
-    })
-  }, [posts.length])
+  
 
   const getAllPosts = async () => {
     try {
@@ -192,7 +183,7 @@ const Feed = ({ connected, name, url }) => {
               <Post
                 post={post.account}
                 viewDetail={getCommentsOnPost}
-                //createComment={saveComment}
+                createComment={saveComment}
                 key={post.account.index}
                 name={name}
                 url={url}

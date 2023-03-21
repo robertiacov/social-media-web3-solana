@@ -4,6 +4,8 @@ import Feed from '../components/Feed'
 
 import { useWallet } from '@solana/wallet-adapter-react'
 import Header from '../components/Header'
+import LeftSidebar from '../components/LeftSidebar'
+import RightSidebar from '../components/RightSidebar'
 
 const style = {
   wrapper: `bg-[#18191a] min-h-screen duration-[0.5s]`,
@@ -28,7 +30,7 @@ export default function Home() {
 
       {registered ? (
         <div className={style.homeWrapper}>
-          {/* siderbar */}
+          <LeftSidebar  name={name} url={url}/>
           <div className={style.main}>
             <Feed 
               connected={wallet.connected}
@@ -36,7 +38,7 @@ export default function Home() {
               url = {url}
             />
           </div>
-          {/* RightSideBar */}
+          <RightSidebar />
         </div>
       ) : (
         <div className={style.signupContainer}>

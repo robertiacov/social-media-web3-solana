@@ -145,7 +145,29 @@ const Feed = ({ connected, name, url }) => {
         program.programId,
       )
 
-      const comments = await program.account.postAccount.fetch(postAddress)
+      const post = await program.account.postAccount.fetch(postAddress)
+
+      let commentAddreasses = []
+
+      for (let i = 0; i < post.commentCount.toNumber(); i++) {
+          let [commentSigner] = await anchor.web3.PublicKey.findProgramAddress(
+            [
+              utf8.encode('comment'),
+              new BN(index).toArrayLike(Buffer, 'be', 8),
+              new BN(i).toArrayLike(Buffer, 'be', 8),
+            ],
+            program.programId
+          )
+
+          commentAddreasses.push(commentSigner)
+      }
+
+      const comments = await program.account.commentAccount.fetchMultiple(commentAddreasses)
+
+      comments.sort((a,b)=>a.postTime.toNumber() - b.postTime.toNumber())
+
+      return comments
+
     } catch (error) {
       console.error(error)
     }
@@ -169,8 +191,8 @@ const Feed = ({ connected, name, url }) => {
             {posts.map(post => (
               <Post
                 post={post.account}
-                //viewDetail={getCommentsOnPost}
-                createComment={saveComment}
+                viewDetail={getCommentsOnPost}
+                //createComment={saveComment}
                 key={post.account.index}
                 name={name}
                 url={url}

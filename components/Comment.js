@@ -19,7 +19,26 @@ const Comment = ({comment}) => {
         timestamp: `text-[#a6aba4] text-sm`,
       }
   return (
-    <div>Comment</div>
+    <>
+        <div className={style.commentWrapper}>
+            <div className={style.profileImageContainer}>
+                <Image
+                className={style.profileImage}
+                src={comment.commenterUrl}
+                height={40}
+                width={40}
+                />
+            </div>
+            <div className={style.commentContainer}>
+                <div className={style.name}>{comment.commenterName}</div>
+            </div>
+        </div>
+        <div className={style.commentActionsContainer}>
+            <div className={style.actionItem}>Like</div>
+            <div className={style.actionItem}>Reply</div>
+            <div className={style.timestamp}>{timeAgo.format(new Date(comment.postTime.toNumber() * 1000), 'twitter-now')}</div>
+        </div>
+    </>
   )
 }
 

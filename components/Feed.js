@@ -64,8 +64,6 @@ const Feed = ({ connected, name, url }) => {
     }
   }
 
-  
-
   const savePost = async text => {
     let [stateSigner] = await anchor.web3.PublicKey.findProgramAddress(
       [utf8.encode('state')],
@@ -135,6 +133,17 @@ const Feed = ({ connected, name, url }) => {
       })
 
       await program.account.commentAccount.fetch(commentSigner)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const getCommentsOnPost = async index => {
+    try {
+      let [postAddress] = await anchor.web3.PublicKey.findProgramAddress(
+        [utf8.encode('post'), index.toArrayLike(Buffer, 'be', 8)],
+        program.programId,
+      )
     } catch (error) {
       console.error(error)
     }

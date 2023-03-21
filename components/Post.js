@@ -40,6 +40,10 @@ const Post = ({ post, viewDetail, createCommentForPost, name, url }) => {
         setComments(await result)
         }
 
+      const createCommentForPost = async text => {
+        createComment(text, post.index, post.commentCount)
+      }
+
   return (
     <div className={style.wrapper}>
         <div className={style.postPublisher}>

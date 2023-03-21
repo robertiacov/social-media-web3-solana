@@ -2,6 +2,24 @@ import React from 'react'
 import Image from 'next/image'
 import Contact from './Contact'
 
+const users = [
+    {
+        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
+        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
+        name: "Robert"
+    },
+    {
+        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
+        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
+        name: "Vlad"
+    },
+    {
+        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
+        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
+        name: "Iacov"
+    }
+]
+
 const RightSidebar = () => {
   return (
     <div className={style.wrapper}>
@@ -43,7 +61,11 @@ const RightSidebar = () => {
             </div>
             <div className={style.divider}/>
             <div className={style.title}>Contacts</div>
-            
+            <div className={style.contactsContainer}>
+                    {users.map(user =>{
+                        return <Contact key = {user.walletAddress} user = {user}/>
+                    })}
+            </div>
         </div>
     </div>
   )

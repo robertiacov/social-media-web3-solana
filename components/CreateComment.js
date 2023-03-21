@@ -5,7 +5,7 @@ import {TiCameraOutline} from 'react-icons/ti'
 import {RiFileGifLine} from 'react-icons/ri'
 import {BiSticker} from 'react-icons/bi'
  
-const CreateComment = ({name, url}) => {
+const CreateComment = ({url, createCommentForPost}) => {
 
     const style = {
       wrapper: `flex items-center`,
@@ -22,7 +22,7 @@ const CreateComment = ({name, url}) => {
     const postComment = async event => {
       event.preventDefault()
 
-      // await createCommentForPost(input)
+      await createCommentForPost(input)
       setInput('')
     }
 

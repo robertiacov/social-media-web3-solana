@@ -38,15 +38,15 @@ const Feed = ({ connected, name, url }) => {
   }, [connected, getAllPosts])
 
   useEffect(() => {
-    toast('Post Refreashed!',{
+    toast('Posts Refreshed!', {
       icon: '🔁',
-      style:{
+      style: {
         borderRadius: '10px',
         background: '#252526',
         color: '#fffcf9',
-      }
+      },
     })
-  },[posts.length])
+  }, [posts.length])
 
   const getAllPosts = async () => {
     try {
@@ -59,6 +59,42 @@ const Feed = ({ connected, name, url }) => {
       setPosts(postsData)
 
       setLoading(false)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const getCommentsOnPost = async (index, oldPost) => {
+    try {
+      let [postSigner] = await anchor.web3.PublicKey.findProgramAddress(
+        [utf8.encode('post'), index.toArrayLike(Buffer, 'be', 8)],
+        program.programId,
+      )
+
+      const post = await program.account.postAccount.fetch(postSigner)
+
+      let commentSigners = []
+
+      for (let i = 0; i < post.commentCount.toNumber(); i++) {
+        let [commentSigner] = await anchor.web3.PublicKey.findProgramAddress(
+          [
+            utf8.encode('comment'),
+            new BN(index).toArrayLike(Buffer, 'be', 8),
+            new BN(i).toArrayLike(Buffer, 'be', 8),
+          ],
+          program.programId,
+        )
+
+        commentSigners.push(commentSigner)
+      }
+
+      const comments = await program.account.commentAccount.fetchMultiple(
+        commentSigners,
+      )
+
+      comments.sort((a, b) => a.postTime.toNumber() - b.postTime.toNumber())
+
+      return comments
     } catch (error) {
       console.error(error)
     }
@@ -133,41 +169,6 @@ const Feed = ({ connected, name, url }) => {
       })
 
       await program.account.commentAccount.fetch(commentSigner)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const getCommentsOnPost = async index => {
-    try {
-      let [postAddress] = await anchor.web3.PublicKey.findProgramAddress(
-        [utf8.encode('post'), index.toArrayLike(Buffer, 'be', 8)],
-        program.programId,
-      )
-
-      const post = await program.account.postAccount.fetch(postAddress)
-
-      let commentAddreasses = []
-
-      for (let i = 0; i < post.commentCount.toNumber(); i++) {
-          let [commentSigner] = await anchor.web3.PublicKey.findProgramAddress(
-            [
-              utf8.encode('comment'),
-              new BN(index).toArrayLike(Buffer, 'be', 8),
-              new BN(i).toArrayLike(Buffer, 'be', 8),
-            ],
-            program.programId
-          )
-
-          commentAddreasses.push(commentSigner)
-      }
-
-      const comments = await program.account.commentAccount.fetchMultiple(commentAddreasses)
-
-      comments.sort((a,b)=>a.postTime.toNumber() - b.postTime.toNumber())
-
-      return comments
-
     } catch (error) {
       console.error(error)
     }

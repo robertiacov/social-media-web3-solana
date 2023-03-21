@@ -31,6 +31,7 @@ const Comment = ({comment}) => {
             </div>
             <div className={style.commentContainer}>
                 <div className={style.name}>{comment.commenterName}</div>
+                <div>{comment.text}</div>
             </div>
         </div>
         <div className={style.commentActionsContainer}>

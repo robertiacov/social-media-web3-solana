@@ -14,7 +14,6 @@ const CommentSection = ({comments, createCommentForPost, name, url}) => {
         ))}
         <CreateComment
             createCommentForPost={createCommentForPost}
-            name = {name} 
             url = {url} 
         />
     </div>

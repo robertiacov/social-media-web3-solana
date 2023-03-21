@@ -14,6 +14,7 @@ const nextConfig = {
       'yt3.ggpht.com',
       'media-exp1.licdn.com',
       'scontent-lax3-1.xx.fbcdn.net',
+      'images.unsplash.com'
     ],
   },
 }

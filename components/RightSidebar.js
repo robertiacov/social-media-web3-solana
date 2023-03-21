@@ -21,6 +21,21 @@ const users = [
 ]
 
 const RightSidebar = () => {
+    
+    const style = {
+        wrapper: `w-[24rem] text-lg text-white`,
+        title: `text-[#afb3b8] font-semibold`,
+        adsContainer: ``,
+        ad: `flex items-center my-3 mr-[1rem] p-2 rounded-lg`,
+        adImageContainer: `h-full w-[50%] flex items-center mr-[0.5rem]`,
+        adImage: `object-cover`,
+        adLink: `text-[#b0b3b8] text-sm`,
+        divider: `w-[95%] border-b border-[0.5px] border-[#3e4042] my-2`,
+        contact: `flex items-center my-2`,
+        contactImage: `rounded-full object-cover`,
+        contactName: `ml-4 text-[1rem]`,
+      }
+
   return (
     <div className={style.wrapper}>
         <div className={style.title}>Sponsored</div>

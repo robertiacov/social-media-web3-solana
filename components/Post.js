@@ -88,7 +88,7 @@ const Post = ({ post, viewDetail, createComment, name, url }) => {
         </div>
         <div className={style.reactionItem}>
           <FiRefreshCw className={style.refreshIcon} />
-          <div className={style.reactionsText}>Refresh Comments</div>
+          <div className={style.reactionsText} onClick = {postDetail}>Refresh Comments</div>
         </div>
       </div>
       {isCommentSectionOpened && (

@@ -144,6 +144,8 @@ const Feed = ({ connected, name, url }) => {
         [utf8.encode('post'), index.toArrayLike(Buffer, 'be', 8)],
         program.programId,
       )
+
+      const comments = await program.account.postAccount.fetch(postAddress)
     } catch (error) {
       console.error(error)
     }

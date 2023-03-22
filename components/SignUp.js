@@ -17,6 +17,15 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
 
     const createUser = async event =>{
         setRegistered(true)
+
+        const resp = await window.solana.connect()
+        const walletAddress = resp.publicKey.toString()
+
+        try {
+            
+        } catch (error) {
+            console.error(error)
+        }
     }
 
   return (

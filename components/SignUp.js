@@ -22,7 +22,17 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
         const walletAddress = resp.publicKey.toString()
 
         try {
-            
+            await fetch(`api/createUser`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userWalletAddress: walletAddress,
+                    name: name,
+                    profileImage: event.target.url.value,
+                })
+            })
         } catch (error) {
             console.error(error)
         }

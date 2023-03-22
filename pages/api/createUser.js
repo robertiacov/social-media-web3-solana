@@ -18,3 +18,5 @@ const createUserOnSanity = async (req, res) => {
         res.status(500).send({message: 'error', data:error.message})
     }
 }
+
+export default createUserOnSanity

@@ -24,6 +24,19 @@ export default function Home() {
 
   const wallet = useWallet()
 
+  const requestUsersData = async activeAccount => {
+    try {
+      const response = await fetch(`api/fetchUsers`)
+      const data = await response.json()
+
+      setUsers(data.data)
+      console.log('users:', data.data)
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div className={style.wrapper}>
       <Header name={name} url={url}/>

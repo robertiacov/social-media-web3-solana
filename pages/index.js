@@ -24,6 +24,12 @@ export default function Home() {
 
   const wallet = useWallet()
 
+  useEffect(() => {
+    ;(async () => {
+      await requestUsersData()
+    })()
+  }, [])
+
   const requestUsersData = async activeAccount => {
     try {
       const response = await fetch(`api/fetchUsers`)

@@ -38,6 +38,13 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
         }
     }
 
+    const generateRandomProfileImageUrl = () =>
+    setUrl(
+        `https://avatars.dicebear.com/api/pixel-art-neutral/${Math.floor(
+            Math.random() * 100,
+        )}.svg`,
+    )
+
   return (
     <div className={style.wrapper}>
         <div className={style.container}>
@@ -73,6 +80,7 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
                         />
                         <div 
                         className={style.randomUrl}
+                        onClick={generateRandomProfileImageUrl}
                         >
                             Random
                         </div>

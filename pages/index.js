@@ -19,7 +19,7 @@ const style = {
 export default function Home() {
   const [registered, setRegistered] = useState(false)
   const [name, setName] = useState('')
-  const [url, setUrl] = useState('https://avatars.dicebear.com/api/adventurer/midnight.svg')
+  const [url, setUrl] = useState('')
   const [users, setUsers] = useState('')
 
   const wallet = useWallet()
@@ -57,7 +57,10 @@ export default function Home() {
               url = {url}
             />
           </div>
-          <RightSidebar />
+          <RightSidebar 
+          getUsers = {requestUsersData}
+          users = {users}
+          />
         </div>
       ) : (
         <div className={style.signupContainer}>

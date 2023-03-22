@@ -1,26 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Image from 'next/image'
 import Contact from './Contact'
 
-const users = [
-    {
-        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
-        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
-        name: "Robert"
-    },
-    {
-        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
-        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
-        name: "Vlad"
-    },
-    {
-        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
-        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
-        name: "Iacov"
-    }
-]
 
-const RightSidebar = () => {
+const RightSidebar = ({getUsers, users}) => {
     
     const style = {
         wrapper: `w-[24rem] text-lg text-white`,
@@ -35,6 +18,12 @@ const RightSidebar = () => {
         contactImage: `rounded-full object-cover`,
         contactName: `ml-4 text-[1rem]`,
       }
+
+    useEffect(() => {
+       ;(async () => {
+        await getUsers()
+       })()
+    }, [])
 
   return (
     <div className={style.wrapper}>

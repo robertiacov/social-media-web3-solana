@@ -30,7 +30,7 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
                 body: JSON.stringify({
                     userWalletAddress: walletAddress,
                     name: name,
-                    profileImage: event.target.url.value,
+                    profileImage: url,
                 })
             })
         } catch (error) {

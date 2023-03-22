@@ -20,7 +20,23 @@ export default function Home() {
   const [registered, setRegistered] = useState(false)
   const [name, setName] = useState('')
   const [url, setUrl] = useState('')
-  const [users, setUsers] = useState('')
+  const [users, setUsers] = useState([
+    {
+        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
+        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
+        name: "Robert"
+    },
+    {
+        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
+        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
+        name: "Vlad"
+    },
+    {
+        walletAddress: "6wbsQTAqTmwuA2xVcqGBRr921uobk9MqMYQjB9iQVJpp",
+        profileImage: 'https://avatars.dicebear.com/api/adventurer/midnight.svg',
+        name: "Iacov"
+    }
+  ])
 
   const wallet = useWallet()
 

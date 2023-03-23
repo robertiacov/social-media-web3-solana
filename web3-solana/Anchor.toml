@@ -1,7 +1,7 @@
 [features]
 seeds = false
 [programs.localnet]
-web3_solana = "CmDpB5bzgYBufuivH9vpMCuxq7yJA8MGnnCyowDHDKt9"
+web3_solana = "25akBwuj7r67QenKtB7sJytKYuC1XBVagrS3dbmMuEXf"
 
 [registry]
 url = "https://anchor.projectserum.com"

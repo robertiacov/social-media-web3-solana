@@ -3,7 +3,7 @@ use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Token};
 use std::mem::size_of;
 
-declare_id!("CmDpB5bzgYBufuivH9vpMCuxq7yJA8MGnnCyowDHDKt9");
+declare_id!("25akBwuj7r67QenKtB7sJytKYuC1XBVagrS3dbmMuEXf");
 
 // Post and comment text length
 const TEXT_LENGTH: usize = 1024;
@@ -12,9 +12,10 @@ const USER_NAME_LENGTH: usize = 100;
 // User profile imaage url length
 const USER_URL_LENGTH: usize = 255;
 
+const NUMBER_OF_ALLOWED_LIKES_SPACE: usize = 5;
 const NUMBER_OF_ALLOWED_LIKES: u8 = 5;
 
-/// Facebook Clone program
+/// Web3 Solana program
 #[program]
 pub mod web3_solana {
     use super::*;
@@ -66,29 +67,8 @@ pub mod web3_solana {
 
         post.likes = 0;
 
-        post.remove = 0;
-
         // Increase state's post count by 1
         state.post_count += 1;
-        Ok(())
-    }
-
-    pub fn like_post(ctx: Context<LikePost>) -> ProgramResult {
-        let post = &mut ctx.accounts.post;
-
-        if post.likes == NUMBER_OF_ALLOWED_LIKES{
-            return Err(Errors::ReachedMaxLikes.into());
-        }
-
-        let mut iter = post.people_who_liked.iter();
-        let user_liking_post = ctx.accounts.authority.key();
-        if iter.any(|&v| v == user_liking_post) {
-            return Err(Errors::UserLikedPost.into());
-        }
-
-        post.likes += 1;
-        post.people_who_liked.push(user_liking_post);
-
         Ok(())
     }
 
@@ -126,6 +106,26 @@ pub mod web3_solana {
 
         Ok(())
     }
+
+    pub fn like_post(ctx: Context<LikePost>) -> ProgramResult {
+        let post = &mut ctx.accounts.post;
+
+        if post.likes == NUMBER_OF_ALLOWED_LIKES{
+            return Err(Errors::ReachedMaxLikes.into());
+        }
+
+        let mut iter = post.people_who_liked.iter();
+        let user_liking_post = ctx.accounts.authority.key();
+        if iter.any(|&v| v == user_liking_post) {
+            return Err(Errors::UserLikedPost.into());
+        }
+
+        post.likes += 1;
+        post.people_who_liked.push(user_liking_post);
+
+        Ok(())
+    }
+
 }
 
 /// Contexts
@@ -168,7 +168,7 @@ pub struct CreatePost<'info> {
         seeds = [b"post".as_ref(), state.post_count.to_be_bytes().as_ref()],
         bump,
         payer = authority,
-        space = size_of::<PostAccount>() + TEXT_LENGTH + USER_NAME_LENGTH + USER_URL_LENGTH
+        space = size_of::<PostAccount>() + TEXT_LENGTH + USER_NAME_LENGTH + USER_URL_LENGTH+8+32*NUMBER_OF_ALLOWED_LIKES_SPACE
     )]
     pub post: Account<'info, PostAccount>,
 
@@ -277,7 +277,6 @@ pub struct PostAccount {
 
     pub likes: u8,
 
-    pub remove: i64,
 }
 
 

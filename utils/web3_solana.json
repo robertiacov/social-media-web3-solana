@@ -125,6 +125,37 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "likePost",
+      "accounts": [
+        {
+          "name": "post",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -176,6 +207,16 @@
           {
             "name": "postTime",
             "type": "i64"
+          },
+          {
+            "name": "peopleWhoLiked",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "likes",
+            "type": "u8"
           }
         ]
       }
@@ -213,7 +254,24 @@
       }
     }
   ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "CannotCreateUser",
+      "msg": "User cannot be created, missing data"
+    },
+    {
+      "code": 6001,
+      "name": "ReachedMaxLikes",
+      "msg": "Cannot receive more than 5 likes"
+    },
+    {
+      "code": 6002,
+      "name": "UserLikedPost",
+      "msg": "User has already liked the post"
+    }
+  ],
   "metadata": {
-    "address": "CmDpB5bzgYBufuivH9vpMCuxq7yJA8MGnnCyowDHDKt9"
+    "address": "25akBwuj7r67QenKtB7sJytKYuC1XBVagrS3dbmMuEXf"
   }
 }

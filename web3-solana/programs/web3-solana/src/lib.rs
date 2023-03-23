@@ -64,10 +64,19 @@ pub mod facebook_clone {
 
         post.likes = 0;
 
-        post.likes = 0;
+        post.remove = 0;
 
         // Increase state's post count by 1
         state.post_count += 1;
+        Ok(())
+    }
+
+    pub fn like_post(ctx: Context<LikePost>) -> ProgramResult {
+        let post = &mut ctx.accounts.post;
+
+        
+
+        post.likes += 1;
         Ok(())
     }
 
@@ -199,6 +208,24 @@ pub struct CreateComment<'info> {
     pub clock: Sysvar<'info, Clock>,
 }
 
+#[derive(Accounts)]
+pub struct LikePost<'info> {
+
+    #[account(mut)]
+    pub post: Account<'info, PostAccount>,
+
+    #[account(mut)]
+    pub authority: Signer<'info>,
+
+    pub system_program: UncheckedAccount<'info>,
+
+    #[account(constraint = token_program.key == &token::ID)]
+    pub token_program: Program<'info, Token>,
+
+    pub clock: Sysvar<'info, Clock>,
+    
+}
+
 // State Account Structure
 #[account]
 pub struct StateAccount {
@@ -237,6 +264,7 @@ pub struct PostAccount {
 
     pub remove: i64,
 }
+
 
 // Comment Account Structure
 #[account]

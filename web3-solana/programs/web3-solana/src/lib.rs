@@ -62,6 +62,8 @@ pub mod facebook_clone {
         // Set post time
         post.post_time = ctx.accounts.clock.unix_timestamp;
 
+        post.likes = 0;
+
         // Increase state's post count by 1
         state.post_count += 1;
         Ok(())
@@ -228,6 +230,10 @@ pub struct PostAccount {
 
     // Post time
     pub post_time: i64,
+
+    pub likes: u8,
+
+    pub remove: i64,
 }
 
 // Comment Account Structure
@@ -250,4 +256,5 @@ pub struct CommentAccount {
 
     // Post time
     pub post_time: i64,
+
 }

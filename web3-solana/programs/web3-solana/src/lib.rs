@@ -64,6 +64,8 @@ pub mod facebook_clone {
 
         post.likes = 0;
 
+        post.likes = 0;
+
         // Increase state's post count by 1
         state.post_count += 1;
         Ok(())

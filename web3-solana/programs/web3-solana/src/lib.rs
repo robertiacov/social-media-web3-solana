@@ -288,3 +288,16 @@ pub struct CommentAccount {
     pub post_time: i64,
 
 }
+
+#[error]
+pub enum Errors {
+    #[msg("User cannot be created, missing data")]
+    CannotCreateUser,
+
+    #[msg("Cannot receive more than 5 likes")]
+    ReachedMaxLikes,
+
+    #[msg("User has already liked the tweet")]
+    UserLikedVideo,
+
+}

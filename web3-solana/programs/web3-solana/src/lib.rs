@@ -16,7 +16,7 @@ const NUMBER_OF_ALLOWED_LIKES: u8 = 5;
 
 /// Facebook Clone program
 #[program]
-pub mod facebook_clone {
+pub mod web3_solana {
     use super::*;
 
     /// Create state to save the post counts

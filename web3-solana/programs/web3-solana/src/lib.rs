@@ -12,6 +12,8 @@ const USER_NAME_LENGTH: usize = 100;
 // User profile imaage url length
 const USER_URL_LENGTH: usize = 255;
 
+const NUMBER_OF_ALLOWED_LIKES: u8 = 5;
+
 /// Facebook Clone program
 #[program]
 pub mod facebook_clone {
@@ -74,9 +76,19 @@ pub mod facebook_clone {
     pub fn like_post(ctx: Context<LikePost>) -> ProgramResult {
         let post = &mut ctx.accounts.post;
 
-        
+        if post.likes == NUMBER_OF_ALLOWED_LIKES{
+            return Err(Errors::ReachedMaxLikes.into());
+        }
+
+        let mut iter = post.people_who_liked.iter();
+        let user_liking_post = ctx.accounts.authority.key();
+        if iter.any(|&v| v == user_liking_post) {
+            return Err(Errors::UserLikedPost.into());
+        }
 
         post.likes += 1;
+        post.people_who_liked.push(user_liking_post);
+
         Ok(())
     }
 
@@ -260,6 +272,9 @@ pub struct PostAccount {
     // Post time
     pub post_time: i64,
 
+    // likes: vector of people who liked it,
+    pub people_who_liked: Vec<Pubkey>,
+
     pub likes: u8,
 
     pub remove: i64,
@@ -297,7 +312,7 @@ pub enum Errors {
     #[msg("Cannot receive more than 5 likes")]
     ReachedMaxLikes,
 
-    #[msg("User has already liked the tweet")]
-    UserLikedVideo,
+    #[msg("User has already liked the post")]
+    UserLikedPost,
 
 }

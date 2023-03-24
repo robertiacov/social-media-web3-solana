@@ -6,12 +6,14 @@ import { FiRefreshCw } from 'react-icons/fi'
 import CommentSection from './CommentSection'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
+import { useWallet } from '@solana/wallet-adapter-react'
+import Feed from './Feed'
 
 TimeAgo.addDefaultLocale(en)
 
 const timeAgo = new TimeAgo('en-US')
 
-const Post = ({ post, viewDetail, createComment, name, url}) => {
+const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddress, likes}) => {
   const style = {
     wrapper: `w-[100%] mt-[1rem] rounded-[0.6rem] bg-[#252526] text-white p-[0.4rem] pb-0`,
     postPublisher: `flex position-relative items-center`,
@@ -27,6 +29,8 @@ const Post = ({ post, viewDetail, createComment, name, url}) => {
   }
 
   const [isCommentSectionOpened, setIsCommentSectionOpened] = useState(false)
+  const [liked, setLiked] = useState (false)
+  const wallet = useWallet()
   const [comments, setComments] = useState([])
 
   useEffect(() => {
@@ -38,6 +42,16 @@ const Post = ({ post, viewDetail, createComment, name, url}) => {
       setIsCommentSectionOpened(true)
     }
   }, [comments])
+
+  useEffect(() => {
+    if(wallet.connected){
+      likeAddress.forEach(address=>{
+        if(wallet.publicKey.toBase58() === address.toBase58()){
+          setLiked(true)
+        }
+      })
+    }
+  }, [wallet, likeAddress])
 
   const clockToDateString = timestamp =>
     timeAgo.format(new Date(timestamp.toNumber() * 1000), 'twitter-now')
@@ -76,7 +90,19 @@ const Post = ({ post, viewDetail, createComment, name, url}) => {
 
       <div className={style.reactionsContainer}>
         <div className={style.reactionItem}>
-          <BiLike />
+          <p>{likes}</p>
+          {liked ? (
+            <BiLike
+              fontSize= 'large'
+              style = {{fill: 'red', stroke: 'red'}}
+            />
+          ) : (
+            <BiLike 
+              fontSize= 'large'
+              onClick = {e => {likePost(address)}}
+            />
+          )}
+          
           <div className={style.reactionsText}>Like</div>
         </div>
         <div

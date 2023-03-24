@@ -201,6 +201,8 @@ const Feed = ({ connected, name, url }) => {
                 key={post.account.index}
                 name={name}
                 url={url}
+                likePost={likePost}
+                likeAddress = {post.account.peopleWhoLiked}
               />
             ))}
           </div>

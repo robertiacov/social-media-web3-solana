@@ -64,6 +64,10 @@ const Feed = ({ connected, name, url }) => {
     }
   }
 
+  const likePost = async address => {
+    
+  }
+
   const getCommentsOnPost = async (index, oldPost) => {
     try {
       let [postSigner] = await anchor.web3.PublicKey.findProgramAddress(

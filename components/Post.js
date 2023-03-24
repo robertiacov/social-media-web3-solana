@@ -13,7 +13,7 @@ TimeAgo.addDefaultLocale(en)
 
 const timeAgo = new TimeAgo('en-US')
 
-const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddress, likes}) => {
+const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddress, likes, address}) => {
   const style = {
     wrapper: `w-[100%] mt-[1rem] rounded-[0.6rem] bg-[#252526] text-white p-[0.4rem] pb-0`,
     postPublisher: `flex position-relative items-center`,

@@ -6,6 +6,7 @@ import { SOLANA_HOST } from '../utils/const'
 import { getProgramInstance } from '../utils/get-program'
 import CreatePost from './CreatePost'
 import Post from './Post.js'
+import { PublicKey } from '@solana/web3.js'
 
 const anchor = require('@project-serum/anchor')
 const { BN, web3 } = anchor
@@ -64,8 +65,22 @@ const Feed = ({ connected, name, url }) => {
     }
   }
 
-  const likePost = async address => {
-    
+  const likePost = async index => {
+    console.log('video liked!')
+
+    let [likeSigner] = await anchor.web3.PublicKey.findProgramAddress(
+        [utf8.encode('post'), new BN(index).toArrayLike(Buffer, 'be', 8)],
+        program.programId,
+      )
+
+      const tx = await program.rpc.likePost({
+        accounts: {
+          post: likeSigner,
+          authority: wallet.publicKey,
+          ...defaultAccounts,
+        },
+    })
+    console.log(tx)
   }
 
   const getCommentsOnPost = async (index, oldPost) => {

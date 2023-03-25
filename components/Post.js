@@ -93,12 +93,12 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
           <p>{likes}</p>
           {liked ? (
             <BiLike
-              fontSize= 'large'
+              fontSize='large'
               style = {{fill: 'red', stroke: 'red'}}
             />
           ) : (
             <BiLike 
-              fontSize= 'large'
+              fontSize='large'
               onClick = {e => {likePost(address)}}
             />
           )}

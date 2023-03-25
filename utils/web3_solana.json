@@ -145,11 +145,6 @@
           "isSigner": false
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "clock",
           "isMut": false,
           "isSigner": false
@@ -272,6 +267,6 @@
     }
   ],
   "metadata": {
-    "address": "25akBwuj7r67QenKtB7sJytKYuC1XBVagrS3dbmMuEXf"
+    "address": "8fqd59rTXPE6P1RgekNGPSj4kUEaxZAhx3DaxRrBoCRh"
   }
 }

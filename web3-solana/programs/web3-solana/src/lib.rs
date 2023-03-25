@@ -2,8 +2,11 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Token};
 use std::mem::size_of;
+use anchor_lang::solana_program::log::{
+    sol_log_compute_units
+};
 
-declare_id!("25akBwuj7r67QenKtB7sJytKYuC1XBVagrS3dbmMuEXf");
+declare_id!("8fqd59rTXPE6P1RgekNGPSj4kUEaxZAhx3DaxRrBoCRh");
 
 // Post and comment text length
 const TEXT_LENGTH: usize = 1024;
@@ -13,7 +16,7 @@ const USER_NAME_LENGTH: usize = 100;
 const USER_URL_LENGTH: usize = 255;
 
 const NUMBER_OF_ALLOWED_LIKES_SPACE: usize = 5;
-const NUMBER_OF_ALLOWED_LIKES: u8 = 5;
+// const NUMBER_OF_ALLOWED_LIKES: u8 = 5;
 
 /// Web3 Solana program
 #[program]
@@ -69,6 +72,7 @@ pub mod web3_solana {
 
         // Increase state's post count by 1
         state.post_count += 1;
+        sol_log_compute_units();
         Ok(())
     }
 
@@ -110,15 +114,15 @@ pub mod web3_solana {
     pub fn like_post(ctx: Context<LikePost>) -> ProgramResult {
         let post = &mut ctx.accounts.post;
 
-        if post.likes == NUMBER_OF_ALLOWED_LIKES{
-            return Err(Errors::ReachedMaxLikes.into());
-        }
+        // if post.likes == NUMBER_OF_ALLOWED_LIKES{
+        //     return Err(Errors::ReachedMaxLikes.into());
+        // }
 
         let mut iter = post.people_who_liked.iter();
         let user_liking_post = ctx.accounts.authority.key();
-        if iter.any(|&v| v == user_liking_post) {
-            return Err(Errors::UserLikedPost.into());
-        }
+        // if iter.any(|&v| v == user_liking_post) {
+        //     return Err(Errors::UserLikedPost.into());
+        // }
 
         post.likes += 1;
         post.people_who_liked.push(user_liking_post);
@@ -220,23 +224,6 @@ pub struct CreateComment<'info> {
     pub clock: Sysvar<'info, Clock>,
 }
 
-#[derive(Accounts)]
-pub struct LikePost<'info> {
-
-    #[account(mut)]
-    pub post: Account<'info, PostAccount>,
-
-    #[account(mut)]
-    pub authority: Signer<'info>,
-
-    pub system_program: UncheckedAccount<'info>,
-
-    #[account(constraint = token_program.key == &token::ID)]
-    pub token_program: Program<'info, Token>,
-
-    pub clock: Sysvar<'info, Clock>,
-    
-}
 
 // State Account Structure
 #[account]
@@ -302,6 +289,25 @@ pub struct CommentAccount {
     pub post_time: i64,
 
 }
+
+#[derive(Accounts)]
+pub struct LikePost<'info> {
+
+    #[account(mut)]
+    pub post: Account<'info, PostAccount>,
+
+    #[account(mut)]
+    pub authority: Signer<'info>,
+
+    pub system_program: UncheckedAccount<'info>,
+
+    // #[account(constraint = token_program.key == &token::ID)]
+    // pub token_program: Program<'info, Token>,
+
+    pub clock: Sysvar<'info, Clock>,
+    
+}
+
 
 #[error]
 pub enum Errors {

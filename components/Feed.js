@@ -6,7 +6,8 @@ import { SOLANA_HOST } from '../utils/const'
 import { getProgramInstance } from '../utils/get-program'
 import CreatePost from './CreatePost'
 import Post from './Post.js'
-import { PublicKey } from '@solana/web3.js'
+import useWeb3 from '../hooks/useWeb3'
+
 
 const anchor = require('@project-serum/anchor')
 const { BN, web3 } = anchor
@@ -19,7 +20,7 @@ const defaultAccounts = {
   systemProgram: SystemProgram.programId,
 }
 
-const Feed = ({ connected, name, url }) => {
+const Feed = ({ connected, name, url, address }) => {
   const style = {
     wrapper: `flex-1 max-w-2xl mx-4`,
   }
@@ -29,6 +30,8 @@ const Feed = ({ connected, name, url }) => {
   const program = getProgramInstance(connection, wallet)
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const { likePost } = useWeb3()
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -63,24 +66,6 @@ const Feed = ({ connected, name, url }) => {
     } catch (error) {
       console.error(error)
     }
-  }
-
-  const likePost = async index => {
-    console.log('video liked!')
-
-    let [likeSigner] = await anchor.web3.PublicKey.findProgramAddress(
-        [utf8.encode('post'), new BN(index).toArrayLike(Buffer, 'be', 8)],
-        program.programId,
-      )
-
-      const tx = await program.rpc.likePost({
-        accounts: {
-          post: likeSigner,
-          authority: wallet.publicKey,
-          ...defaultAccounts,
-        },
-    })
-    console.log(tx)
   }
 
   const getCommentsOnPost = async (index, oldPost) => {
@@ -216,6 +201,8 @@ const Feed = ({ connected, name, url }) => {
                 key={post.account.index}
                 name={name}
                 url={url}
+                address = {post.publicKey.toBase58()}
+                likes = {post.account.likes}
                 likePost={likePost}
                 likeAddress = {post.account.peopleWhoLiked}
               />

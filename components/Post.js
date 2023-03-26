@@ -26,6 +26,7 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
     reactionItem: `flex flex-1 items-center justify-center rounded-[0.4rem] hover:bg-[#404041] py-2`,
     reactionsText: `ml-[1rem]`,
     refreshIcon: `text-blue-500`,
+    likeNumber: `mr-2`,
   }
 
   const [isCommentSectionOpened, setIsCommentSectionOpened] = useState(false)
@@ -90,7 +91,9 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
 
       <div className={style.reactionsContainer}>
         <div className={style.reactionItem}>
-          <p>{likes}</p>
+          <div className={style.likeNumber}>
+            <p>{likes}</p>
+          </div>
           {liked ? (
             <BiLike
               fontSize='large'
@@ -102,7 +105,6 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
               onClick = {e => {likePost(address)}}
             />
           )}
-          
           <div className={style.reactionsText}>Like</div>
         </div>
         <div

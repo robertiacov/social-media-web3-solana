@@ -6,7 +6,7 @@ use anchor_lang::solana_program::log::{
     sol_log_compute_units
 };
 
-declare_id!("8fqd59rTXPE6P1RgekNGPSj4kUEaxZAhx3DaxRrBoCRh");
+declare_id!("D2jUdR3ejCMKy9TwkpcNZsj36snszBWQiLdWEryQ8Xdo");
 
 // Post and comment text length
 const TEXT_LENGTH: usize = 1024;
@@ -120,9 +120,9 @@ pub mod web3_solana {
 
         let mut iter = post.people_who_liked.iter();
         let user_liking_post = ctx.accounts.authority.key();
-        // if iter.any(|&v| v == user_liking_post) {
-        //     return Err(Errors::UserLikedPost.into());
-        // }
+        if iter.any(|&v| v == user_liking_post) {
+            return Err(Errors::UserLikedPost.into());
+        }
 
         post.likes += 1;
         post.people_who_liked.push(user_liking_post);

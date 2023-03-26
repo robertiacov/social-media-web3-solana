@@ -7,7 +7,6 @@ import CommentSection from './CommentSection'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
 import { useWallet } from '@solana/wallet-adapter-react'
-import Feed from './Feed'
 
 TimeAgo.addDefaultLocale(en)
 
@@ -90,9 +89,11 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
       </div>
 
       <div className={style.reactionsContainer}>
-        <div className={style.reactionItem}>
+        <div className={style.reactionItem}
+        
+        >
           <div className={style.likeNumber}>
-            <p>{likes}</p>
+            {likes > 0 && <p>{likes}</p>}
           </div>
           {liked ? (
             <BiLike

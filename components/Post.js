@@ -7,6 +7,7 @@ import CommentSection from './CommentSection'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
 import { useWallet } from '@solana/wallet-adapter-react'
+import toast, { Toaster } from 'react-hot-toast'
 
 TimeAgo.addDefaultLocale(en)
 
@@ -66,6 +67,20 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
     createComment(text, post.index, post.commentCount)
   }
 
+  const handleLikeClick = () => {
+    if (liked) {
+      toast('You already liked this post!', {
+        icon: '👍',
+        style: {
+          borderRadius: '10px',
+          background: '#252526',
+          color: '#fffcf9',
+        },
+      });
+      setLiked(true);
+    }
+  };
+
   return (
     <div className={style.wrapper}>
       <div className={style.postPublisher}>
@@ -106,7 +121,9 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
               onClick = {e => {likePost(address)}}
             />
           )}
-          <div className={style.reactionsText}>Like</div>
+          <div className={style.reactionsText}
+          onClick={handleLikeClick}
+          >Like</div>
         </div>
         <div
           className={style.reactionItem}

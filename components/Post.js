@@ -105,7 +105,7 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
 
       <div className={style.reactionsContainer}>
         <div className={style.reactionItem}
-        
+        onClick={handleLikeClick}
         >
           <div className={style.likeNumber}>
             {likes > 0 && <p>{likes}</p>}
@@ -121,9 +121,7 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
               onClick = {e => {likePost(address)}}
             />
           )}
-          <div className={style.reactionsText}
-          onClick={handleLikeClick}
-          >Like</div>
+          <div className={style.reactionsText}>Like</div>
         </div>
         <div
           className={style.reactionItem}

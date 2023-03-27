@@ -9,7 +9,7 @@ import en from 'javascript-time-ago/locale/en.json'
 import { useWallet } from '@solana/wallet-adapter-react'
 import toast, { Toaster } from 'react-hot-toast'
 
-TimeAgo.addDefaultLocale(en)
+TimeAgo.addLocale(en)
 
 const timeAgo = new TimeAgo('en-US')
 

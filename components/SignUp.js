@@ -49,14 +49,15 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
     <div className={style.wrapper}>
         <div className={style.container}>
             <Image 
-                src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg"
+                src="https://i.ibb.co/yV48nsv/solverse-low-resolution-color-logo-1.png"
                 height={40}
-                width={40}
+                width={55}
                 alt='meta logo'
+                style={{borderRadius: '10px', overflow: 'hidden'}}
             />
         </div>
         <div className={style.title}>
-            Please sign up to use SocialMedia</div>
+            Please sign up to use Solverse</div>
             <form onSubmit={createUser} className={style.form}>
                 <div className={style.fieldContainer}>
                     <div className={style.inputTitle}>Name</div>

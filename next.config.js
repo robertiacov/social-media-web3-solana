@@ -16,7 +16,9 @@ const nextConfig = {
       'scontent-lax3-1.xx.fbcdn.net',
       'images.unsplash.com',
       'unsplash.com',
-      'source.unsplash.com'
+      'source.unsplash.com',
+      'ibb.co',
+      'i.ibb.co'
     ],
   },
 }

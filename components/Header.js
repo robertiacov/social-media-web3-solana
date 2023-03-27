@@ -38,10 +38,11 @@ const Header = ({ name, url }) => {
         <div className={style.headerLeft}>
             <Image 
             className={style.facebookLogo}
-            src='https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg'
+            src='https://i.ibb.co/yV48nsv/solverse-low-resolution-color-logo-1.png'
+            height={40}
+            width={55}
             alt='meta logo'
-            height={30}
-            width={30}
+            style={{borderRadius: '10px', overflow: 'hidden'}}
             />
             <div className={style.searchContainer}>
                 <AiOutlineSearch />

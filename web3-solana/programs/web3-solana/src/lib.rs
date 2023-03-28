@@ -88,13 +88,13 @@ pub mod web3_solana {
         // Get State
        msg!(&description);  //logging
 
-    //    if description.trim().is_empty() || video_url.trim().is_empty() {
-    //        return Err(Errors::CannotCreateVideo.into());
+    //    if description.trim().is_empty() || media_url.trim().is_empty() {
+    //        return Err(Errors::CannotCreateMedia.into());
     //    }
         let state = &mut ctx.accounts.state;
 
-        // Get video
-        let media = &mut ctx.accounts.video;
+        // Get media
+        let media = &mut ctx.accounts.media;
         // Set authority
         media.authority = ctx.accounts.authority.key();
         // Set text
@@ -107,16 +107,16 @@ pub mod web3_solana {
         media.poster_url = poster_url;
         // Set comment count as 0
         media.comment_count = 0;
-        // Set video index as state's video count
+        // Set media index as state's media count
         media.index = state.media_count;
-        // Set video time
+        // Set media time
         media.post_time = ctx.accounts.clock.unix_timestamp;
 
         media.likes = 0;
 
         // media.remove = 0;
 
-        // Increase state's video count by 1
+        // Increase state's media count by 1
         state.media_count += 1;
         msg!("Media Added!");  //logging
         sol_log_compute_units(); //Logs how many compute units are left, important for budget
@@ -245,16 +245,16 @@ pub struct CreateMedia<'info> {
     #[account(mut, seeds = [b"state".as_ref()], bump)]
     pub state: Account<'info, StateAccount>,
 
-    // Authenticate video account
+    // Authenticate media account
     #[account(
         init,
-        // Video account use string "video" and index of video as seeds
+        // Media account use string "media" and index of media as seeds
         seeds = [b"media".as_ref(), state.media_count.to_be_bytes().as_ref()],
         bump,
         payer = authority,
         space = size_of::<PostAccount>() + TEXT_LENGTH + USER_NAME_LENGTH + USER_URL_LENGTH+MEDIA_URL_LENGTH+8+32*NUMBER_OF_ALLOWED_LIKES_SPACE // 32 bits in a pubkey and we have 5
     )]
-    pub video: Account<'info, PostAccount>,
+    pub media: Account<'info, PostAccount>,
 
     // Authority (this is signer who paid transaction fee)
     #[account(mut)]
@@ -315,7 +315,7 @@ pub struct StateAccount {
     // Post count
     pub post_count: u64,
 
-    // Video count
+    // Media count
     pub media_count: u64,
 }
 
@@ -351,7 +351,7 @@ pub struct PostAccount {
     // description text
     pub description: String,
 
-    // video url
+    // media url
     pub media_url: String,
 
 }

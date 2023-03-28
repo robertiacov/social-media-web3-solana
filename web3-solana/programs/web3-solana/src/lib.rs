@@ -6,7 +6,7 @@ use anchor_lang::solana_program::log::{
     sol_log_compute_units
 };
 
-declare_id!("D2jUdR3ejCMKy9TwkpcNZsj36snszBWQiLdWEryQ8Xdo");
+declare_id!("BTFgVMc4aQjxqbxRkgDfiMg9ZGGtPBGWoULokvsNoK53");
 
 // Post and comment text length
 const TEXT_LENGTH: usize = 1024;

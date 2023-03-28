@@ -78,6 +78,59 @@
       ]
     },
     {
+      "name": "createMedia",
+      "accounts": [
+        {
+          "name": "state",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "media",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "mediaUrl",
+          "type": "string"
+        },
+        {
+          "name": "posterName",
+          "type": "string"
+        },
+        {
+          "name": "posterUrl",
+          "type": "string"
+        }
+      ]
+    },
+    {
       "name": "createComment",
       "accounts": [
         {
@@ -166,6 +219,10 @@
           {
             "name": "postCount",
             "type": "u64"
+          },
+          {
+            "name": "mediaCount",
+            "type": "u64"
           }
         ]
       }
@@ -212,6 +269,14 @@
           {
             "name": "likes",
             "type": "u8"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "mediaUrl",
+            "type": "string"
           }
         ]
       }
@@ -267,6 +332,6 @@
     }
   ],
   "metadata": {
-    "address": "D2jUdR3ejCMKy9TwkpcNZsj36snszBWQiLdWEryQ8Xdo"
+    "address": "BTFgVMc4aQjxqbxRkgDfiMg9ZGGtPBGWoULokvsNoK53"
   }
 }

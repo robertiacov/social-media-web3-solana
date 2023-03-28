@@ -14,6 +14,7 @@ const TEXT_LENGTH: usize = 1024;
 const USER_NAME_LENGTH: usize = 100;
 // User profile imaage url length
 const USER_URL_LENGTH: usize = 255;
+const MEDIA_URL_LENGTH: usize = 255;
 
 const NUMBER_OF_ALLOWED_LIKES_SPACE: usize = 5;
 // const NUMBER_OF_ALLOWED_LIKES: u8 = 5;
@@ -35,6 +36,7 @@ pub mod web3_solana {
         state.authority = ctx.accounts.authority.key();
         // Set post count as 0 when initializing
         state.post_count = 0;
+        state.media_count = 0;
         Ok(())
     }
 
@@ -73,6 +75,51 @@ pub mod web3_solana {
         // Increase state's post count by 1
         state.post_count += 1;
         sol_log_compute_units();
+        Ok(())
+    }
+
+    pub fn create_media(
+        ctx: Context<CreateMedia>,
+        description: String,
+        media_url: String,
+        poster_name: String,
+        poster_url: String,
+    ) -> ProgramResult {
+        // Get State
+       msg!(&description);  //logging
+
+    //    if description.trim().is_empty() || video_url.trim().is_empty() {
+    //        return Err(Errors::CannotCreateVideo.into());
+    //    }
+        let state = &mut ctx.accounts.state;
+
+        // Get video
+        let media = &mut ctx.accounts.video;
+        // Set authority
+        media.authority = ctx.accounts.authority.key();
+        // Set text
+        media.description = description;
+        media.media_url = media_url;
+
+        // Set creator name
+        media.poster_name = poster_name;
+        // Set creator avatar url
+        media.poster_url = poster_url;
+        // Set comment count as 0
+        media.comment_count = 0;
+        // Set video index as state's video count
+        media.index = state.media_count;
+        // Set video time
+        media.post_time = ctx.accounts.clock.unix_timestamp;
+
+        media.likes = 0;
+
+        // media.remove = 0;
+
+        // Increase state's video count by 1
+        state.media_count += 1;
+        msg!("Media Added!");  //logging
+        sol_log_compute_units(); //Logs how many compute units are left, important for budget
         Ok(())
     }
 
@@ -191,6 +238,40 @@ pub struct CreatePost<'info> {
     pub clock: Sysvar<'info, Clock>,
 }
 
+/// CreateMedia context
+#[derive(Accounts)]
+pub struct CreateMedia<'info> {
+    // Authenticate state account
+    #[account(mut, seeds = [b"state".as_ref()], bump)]
+    pub state: Account<'info, StateAccount>,
+
+    // Authenticate video account
+    #[account(
+        init,
+        // Video account use string "video" and index of video as seeds
+        seeds = [b"media".as_ref(), state.media_count.to_be_bytes().as_ref()],
+        bump,
+        payer = authority,
+        space = size_of::<PostAccount>() + TEXT_LENGTH + USER_NAME_LENGTH + USER_URL_LENGTH+MEDIA_URL_LENGTH+8+32*NUMBER_OF_ALLOWED_LIKES_SPACE // 32 bits in a pubkey and we have 5
+    )]
+    pub video: Account<'info, PostAccount>,
+
+    // Authority (this is signer who paid transaction fee)
+    #[account(mut)]
+    pub authority: Signer<'info>,
+
+    /// System program
+    /// CHECK: Simple test account for tiktok
+    pub system_program: UncheckedAccount<'info>,
+
+    // Token program
+    #[account(constraint = token_program.key == &token::ID)]
+    pub token_program: Program<'info, Token>,
+
+    // Clock to save time
+    pub clock: Sysvar<'info, Clock>,
+}
+
 /// CreateComment context
 #[derive(Accounts)]
 pub struct CreateComment<'info> {
@@ -233,6 +314,9 @@ pub struct StateAccount {
 
     // Post count
     pub post_count: u64,
+
+    // Video count
+    pub media_count: u64,
 }
 
 // Post Account Structure
@@ -263,6 +347,12 @@ pub struct PostAccount {
     pub people_who_liked: Vec<Pubkey>,
 
     pub likes: u8,
+
+    // description text
+    pub description: String,
+
+    // video url
+    pub media_url: String,
 
 }
 

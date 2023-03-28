@@ -50,7 +50,7 @@ const SignUp = ({setRegistered, name, setName, url, setUrl}) => {
         <div className={style.container}>
             <Image 
                 src="https://i.ibb.co/yV48nsv/solverse-low-resolution-color-logo-1.png"
-                height={40}
+                height={41}
                 width={55}
                 alt='meta logo'
                 style={{borderRadius: '10px', overflow: 'hidden'}}

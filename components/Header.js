@@ -39,7 +39,7 @@ const Header = ({ name, url }) => {
             <Image 
             className={style.facebookLogo}
             src='https://i.ibb.co/yV48nsv/solverse-low-resolution-color-logo-1.png'
-            height={40}
+            height={35}
             width={55}
             alt='meta logo'
             style={{borderRadius: '10px', overflow: 'hidden'}}
@@ -49,7 +49,7 @@ const Header = ({ name, url }) => {
                 <input 
                 type='text'
                 className={style.searchInput}
-                placeholder='Search Meta'
+                placeholder='Search Solverse'
                 />
             </div>
         </div>

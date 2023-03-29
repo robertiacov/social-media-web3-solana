@@ -15,7 +15,7 @@ const defaultAccounts = {
     systemProgram: SystemProgram.programId,
 }
 
-const useWeb3 = () => {
+const useWeb3 = (mediaUrl, description, setDescription, setMediaUrl, setNewMediaShow) => {
     const wallet = useWallet();
     const connection = new anchor.web3.Connection(SOLANA_HOST);
     const program = getProgramInstance(connection, wallet);
@@ -32,7 +32,39 @@ const useWeb3 = () => {
         })
         console.log(tx)
     }
-    return {likePost}
+
+    const newMedia = async () => {
+        const randomKey = anchor.web3.Keypair.generate().publicKey
+
+        let [media_pda] = await anchor.web3.PublicKey.findProgramAddress(
+            [utf8.encode("media"), randomKey.toBuffer()],
+            program.programId,
+        )
+
+        const tx = await program.rpc.createMedia(
+            description,
+            mediaUrl,
+            userDetail.userName,
+            userDetail.userProfileImageUrl,
+            {
+                accounts: {
+                    media: media_pda,
+                    randomKey: randomKey,
+                    authority: wallet.publicKey,
+                    ...defaultAccounts,
+                },
+            }
+        )
+        console.log(tx)
+
+        setDescription('')
+        setMediaUrl('')
+        setNewMediaShow(false)
+    }
+
+    return {likePost, newMedia}
+
+    
 }
 
 export default useWeb3

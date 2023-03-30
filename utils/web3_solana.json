@@ -78,7 +78,7 @@
       ]
     },
     {
-      "name": "createMedia",
+      "name": "createPhoto",
       "accounts": [
         {
           "name": "state",
@@ -86,7 +86,7 @@
           "isSigner": false
         },
         {
-          "name": "media",
+          "name": "photo",
           "isMut": true,
           "isSigner": false
         },
@@ -117,7 +117,7 @@
           "type": "string"
         },
         {
-          "name": "mediaUrl",
+          "name": "photoUrl",
           "type": "string"
         },
         {
@@ -221,7 +221,7 @@
             "type": "u64"
           },
           {
-            "name": "mediaCount",
+            "name": "photoCount",
             "type": "u64"
           }
         ]
@@ -269,14 +269,56 @@
           {
             "name": "likes",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PhotoAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
           },
           {
             "name": "description",
             "type": "string"
           },
           {
-            "name": "mediaUrl",
+            "name": "photoUrl",
             "type": "string"
+          },
+          {
+            "name": "posterName",
+            "type": "string"
+          },
+          {
+            "name": "posterUrl",
+            "type": "string"
+          },
+          {
+            "name": "commentCount",
+            "type": "u64"
+          },
+          {
+            "name": "index",
+            "type": "u64"
+          },
+          {
+            "name": "postTime",
+            "type": "i64"
+          },
+          {
+            "name": "peopleWhoLiked",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "likes",
+            "type": "u8"
           }
         ]
       }
@@ -332,6 +374,6 @@
     }
   ],
   "metadata": {
-    "address": "BTFgVMc4aQjxqbxRkgDfiMg9ZGGtPBGWoULokvsNoK53"
+    "address": "8Et4TdRcRoiaiY5kQwk2px3dMkmRRDVTDPzwbT8wBjNv"
   }
 }

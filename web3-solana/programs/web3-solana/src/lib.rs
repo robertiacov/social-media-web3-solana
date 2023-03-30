@@ -6,7 +6,7 @@ use anchor_lang::solana_program::log::{
     sol_log_compute_units
 };
 
-declare_id!("BTFgVMc4aQjxqbxRkgDfiMg9ZGGtPBGWoULokvsNoK53");
+declare_id!("8Et4TdRcRoiaiY5kQwk2px3dMkmRRDVTDPzwbT8wBjNv");
 
 // Post and comment text length
 const TEXT_LENGTH: usize = 1024;
@@ -14,7 +14,7 @@ const TEXT_LENGTH: usize = 1024;
 const USER_NAME_LENGTH: usize = 100;
 // User profile imaage url length
 const USER_URL_LENGTH: usize = 255;
-const MEDIA_URL_LENGTH: usize = 255;
+const PHOTO_URL_LENGTH: usize = 255;
 
 const NUMBER_OF_ALLOWED_LIKES_SPACE: usize = 5;
 // const NUMBER_OF_ALLOWED_LIKES: u8 = 5;
@@ -36,7 +36,7 @@ pub mod web3_solana {
         state.authority = ctx.accounts.authority.key();
         // Set post count as 0 when initializing
         state.post_count = 0;
-        state.media_count = 0;
+        state.photo_count = 0;
         Ok(())
     }
 
@@ -78,47 +78,47 @@ pub mod web3_solana {
         Ok(())
     }
 
-    pub fn create_media(
-        ctx: Context<CreateMedia>,
+    pub fn create_photo(
+        ctx: Context<CreatePhoto>,
         description: String,
-        media_url: String,
+        photo_url: String,
         poster_name: String,
         poster_url: String,
     ) -> ProgramResult {
         // Get State
        msg!(&description);  //logging
 
-    //    if description.trim().is_empty() || media_url.trim().is_empty() {
-    //        return Err(Errors::CannotCreateMedia.into());
+    //    if description.trim().is_empty() || photo_url.trim().is_empty() {
+    //        return Err(Errors::CannotCreatePhoto.into());
     //    }
         let state = &mut ctx.accounts.state;
 
-        // Get media
-        let media = &mut ctx.accounts.media;
+        // Get photo
+        let photo = &mut ctx.accounts.photo;
         // Set authority
-        media.authority = ctx.accounts.authority.key();
+        photo.authority = ctx.accounts.authority.key();
         // Set text
-        media.description = description;
-        media.media_url = media_url;
+        photo.description = description;
+        photo.photo_url = photo_url;
 
         // Set creator name
-        media.poster_name = poster_name;
+        photo.poster_name = poster_name;
         // Set creator avatar url
-        media.poster_url = poster_url;
+        photo.poster_url = poster_url;
         // Set comment count as 0
-        media.comment_count = 0;
-        // Set media index as state's media count
-        media.index = state.media_count;
-        // Set media time
-        media.post_time = ctx.accounts.clock.unix_timestamp;
+        photo.comment_count = 0;
+        // Set photo index as state's photo count
+        photo.index = state.photo_count;
+        // Set photo time
+        photo.post_time = ctx.accounts.clock.unix_timestamp;
 
-        media.likes = 0;
+        photo.likes = 0;
 
-        // media.remove = 0;
+        // photo.remove = 0;
 
-        // Increase state's media count by 1
-        state.media_count += 1;
-        msg!("Media Added!");  //logging
+        // Increase state's photo count by 1
+        state.photo_count += 1;
+        msg!("Photo Added!");  //logging
         sol_log_compute_units(); //Logs how many compute units are left, important for budget
         Ok(())
     }
@@ -238,23 +238,23 @@ pub struct CreatePost<'info> {
     pub clock: Sysvar<'info, Clock>,
 }
 
-/// CreateMedia context
+/// CreatePhoto context
 #[derive(Accounts)]
-pub struct CreateMedia<'info> {
+pub struct CreatePhoto<'info> {
     // Authenticate state account
     #[account(mut, seeds = [b"state".as_ref()], bump)]
     pub state: Account<'info, StateAccount>,
 
-    // Authenticate media account
+    // Authenticate photo account
     #[account(
         init,
-        // Media account use string "media" and index of media as seeds
-        seeds = [b"media".as_ref(), state.media_count.to_be_bytes().as_ref()],
+        // Photo account use string "photo" and index of photo as seeds
+        seeds = [b"photo".as_ref(), state.photo_count.to_be_bytes().as_ref()],
         bump,
         payer = authority,
-        space = size_of::<PostAccount>() + TEXT_LENGTH + USER_NAME_LENGTH + USER_URL_LENGTH+MEDIA_URL_LENGTH+8+32*NUMBER_OF_ALLOWED_LIKES_SPACE // 32 bits in a pubkey and we have 5
+        space = size_of::<PhotoAccount>() + TEXT_LENGTH + USER_NAME_LENGTH + USER_URL_LENGTH+PHOTO_URL_LENGTH+8+32*NUMBER_OF_ALLOWED_LIKES_SPACE // 32 bits in a pubkey and we have 5
     )]
-    pub media: Account<'info, PostAccount>,
+    pub photo: Account<'info, PhotoAccount>,
 
     // Authority (this is signer who paid transaction fee)
     #[account(mut)]
@@ -315,8 +315,8 @@ pub struct StateAccount {
     // Post count
     pub post_count: u64,
 
-    // Media count
-    pub media_count: u64,
+    // photo count
+    pub photo_count: u64,
 }
 
 // Post Account Structure
@@ -348,13 +348,41 @@ pub struct PostAccount {
 
     pub likes: u8,
 
+}
+
+#[account]
+pub struct PhotoAccount {
+    // Signer address
+    pub authority: Pubkey,
+
     // description text
     pub description: String,
 
-    // media url
-    pub media_url: String,
+    // photo url
+    pub photo_url: String,
 
+    // Photo creator name
+    pub poster_name: String,
+
+    // Photo creator url
+    pub poster_url: String,
+
+    // Comment counts of videos
+    pub comment_count: u64,
+
+    // Video index
+    pub index: u64,
+
+    // Video time
+    pub post_time: i64,
+
+    // likes: vector of people who liked it,
+    pub people_who_liked: Vec<Pubkey>,
+
+    // number of likes
+    pub likes: u8,
 }
+
 
 
 // Comment Account Structure

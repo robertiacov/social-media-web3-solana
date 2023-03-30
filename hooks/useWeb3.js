@@ -15,7 +15,7 @@ const defaultAccounts = {
     systemProgram: SystemProgram.programId,
 }
 
-const useWeb3 = (mediaUrl, description, setDescription, setMediaUrl, setNewMediaShow) => {
+const useWeb3 = (photoUrl, description, setDescription, setPhotoUrl, setNewPhotoShow) => {
     const wallet = useWallet();
     const connection = new anchor.web3.Connection(SOLANA_HOST);
     const program = getProgramInstance(connection, wallet);
@@ -33,22 +33,22 @@ const useWeb3 = (mediaUrl, description, setDescription, setMediaUrl, setNewMedia
         console.log(tx)
     }
 
-    const newMedia = async () => {
+    const newPhoto = async () => {
         const randomKey = anchor.web3.Keypair.generate().publicKey
 
-        let [media_pda] = await anchor.web3.PublicKey.findProgramAddress(
-            [utf8.encode("media"), randomKey.toBuffer()],
+        let [photo_pda] = await anchor.web3.PublicKey.findProgramAddress(
+            [utf8.encode("photo"), randomKey.toBuffer()],
             program.programId,
         )
 
-        const tx = await program.rpc.createMedia(
+        const tx = await program.rpc.createPhoto(
             description,
-            mediaUrl,
+            photoUrl,
             userDetail.userName,
             userDetail.userProfileImageUrl,
             {
                 accounts: {
-                    media: media_pda,
+                    photo: photo_pda,
                     randomKey: randomKey,
                     authority: wallet.publicKey,
                     ...defaultAccounts,
@@ -58,11 +58,11 @@ const useWeb3 = (mediaUrl, description, setDescription, setMediaUrl, setNewMedia
         console.log(tx)
 
         setDescription('')
-        setMediaUrl('')
-        setNewMediaShow(false)
+        setPhotoUrl('')
+        setNewPhotoShow(false)
     }
 
-    return {likePost, newMedia}
+    return {likePost, newPhoto}
 
     
 }

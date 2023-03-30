@@ -31,7 +31,20 @@ const Feed = ({ connected, name, url, address }) => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const { likePost } = useWeb3()
+  const [newPhotoShow, setNewPhotoShow] = useState(false)
+  const [description, setDescription] = useState('')
+  const [photoUrl, setPhotoUrl] = useState('')
+  const [userDetail, setUserDetail] = useState()
+
+
+  const { likePost, newPhoto } = useWeb3(
+    photoUrl,
+    description,
+    setDescription,
+    setPhotoUrl,
+    setNewPhotoShow,
+    userDetail
+  )
 
   useEffect(() => {
     const interval = setInterval(async () => {

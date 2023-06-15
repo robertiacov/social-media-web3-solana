@@ -105,8 +105,7 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
 
       <div className={style.reactionsContainer}>
         <div className={style.reactionItem}
-        onClick={handleLikeClick}
-        >
+        onClick={handleLikeClick}>
           <div className={style.likeNumber}>
             {likes > 0 && <p>{likes}</p>}
           </div>
@@ -125,8 +124,7 @@ const Post = ({ post, viewDetail, createComment, name, url, likePost, likeAddres
         </div>
         <div
           className={style.reactionItem}
-          onClick={() => setIsCommentSectionOpened(!isCommentSectionOpened)}
-        >
+          onClick={() => setIsCommentSectionOpened(!isCommentSectionOpened)}>
           <FaRegCommentAlt />
           <div className={style.reactionsText}>Comment</div>
         </div>

@@ -46,6 +46,28 @@ export default function Home() {
     })()
   }, [])
 
+  //   useEffect(() => {
+  //   if (wallet.connected) {
+  //     checkAccount()
+  //   }
+  // }, [wallet.connected])
+
+  // const checkAccount = async () => {
+  //   let [user_pda] = await anchor.web3.PublicKey.findProgramAddress(
+  //     [utf8.encode('user'), wallet.publicKey.toBuffer()],
+  //     program.programId,
+  //   )
+
+  //   try {
+  //     const userInfo = await program.account.userAccount.fetch(user_pda)
+  //     console.log(userInfo)
+  //     setUserDetail(userInfo)
+  //     setRegistered(true)
+  //   } catch (e) {
+  //     setRegistered(false)
+  //   }
+  // }
+
   const requestUsersData = async activeAccount => {
     try {
       const response = await fetch(`api/fetchUsers`)

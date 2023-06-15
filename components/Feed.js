@@ -7,6 +7,7 @@ import { getProgramInstance } from '../utils/get-program'
 import CreatePost from './CreatePost'
 import Post from './Post.js'
 import useWeb3 from '../hooks/useWeb3'
+import setRegistered from '../components/SignUp'
 
 
 const anchor = require('@project-serum/anchor')
@@ -45,6 +46,8 @@ const Feed = ({ connected, name, url, address }) => {
     setNewPhotoShow,
     userDetail
   )
+
+
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -153,7 +156,7 @@ const Feed = ({ connected, name, url, address }) => {
           post: postSigner,
           authority: wallet.publicKey,
           ...defaultAccounts,
-        },
+        }
       })
 
       setPosts(await program.account.postAccount.all())
@@ -161,13 +164,13 @@ const Feed = ({ connected, name, url, address }) => {
   }
 
   const saveComment = async (text, index, count) => {
-    let [postSigner] = await anchor.web3.PublicKey.findProgramAddress(
+    let [postSigner] = await anchor.web3.PublicKey.findProgramAddressSync(
       [utf8.encode('post'), index.toArrayLike(Buffer, 'be', 8)],
       program.programId,
     )
 
     try {
-      let [commentSigner] = await anchor.web3.PublicKey.findProgramAddress(
+      let [commentSigner] = await anchor.web3.PublicKey.findProgramAddressSync(
         [
           utf8.encode('comment'),
           index.toArrayLike(Buffer, 'be', 8),
@@ -190,6 +193,10 @@ const Feed = ({ connected, name, url, address }) => {
       console.error(error)
     }
   }
+
+
+
+  
 
   return (
     <div className={style.wrapper}>

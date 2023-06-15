@@ -1,6 +1,8 @@
 import '../styles/globals.css'
 import { WalletBalanceProvider } from '../context/useWalletBalance'
 import dynamic from 'next/dynamic'
+import GoogleAnalytics from '../components/GoogleAnalystics'
+import CookieBanner from '../components/CookieBanner'
 
 function MyApp({ Component, pageProps }) {
 
@@ -13,7 +15,9 @@ function MyApp({ Component, pageProps }) {
   return (
       <WalletConnectionProvider>
           <WalletBalanceProvider>
+                <GoogleAnalytics GA_MEASUREMENT_ID='G-0GJZTYSMDQ'/>
                 <Component {...pageProps} />
+                <CookieBanner />
           </WalletBalanceProvider>
       </WalletConnectionProvider>
   )

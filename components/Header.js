@@ -73,7 +73,7 @@ const Header = ({ name, url }) => {
             {name && (
             <div className={`${style.userInfo} ${style.headerRightButton}`}>
                 <Image
-                src={url || "https://avatars.dicebear.com/api/adventurer/facebooklogo.svg"}
+                src={url || "https://avatars.dicebear.com/api/adventurer/something.svg"}
                 height={20}
                 width={20}
                 className={style.userImage}
